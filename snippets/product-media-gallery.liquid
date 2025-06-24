@@ -24,7 +24,6 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js" defer></script>
 <script>
   const variantImages = {};
-
   {% for media in product.media %}
     {% if media.media_type == 'image' %}
       {% assign color = media.alt | handleize %}
@@ -37,19 +36,29 @@
       });
     {% endif %}
   {% endfor %}
-</script>
-<script>
-    const swiper = new Swiper('.product-swiper', {
+
+  function initSwiperAndSlides(container) {
+    const swiperContainer = container.querySelector('.product-swiper');
+    if (!swiperContainer) return;
+
+    const swiperWrapper = swiperContainer.querySelector('.swiper-wrapper');
+    if (!swiperWrapper) return;
+
+    const paginationEl = swiperContainer.querySelector('.swiper-pagination');
+    const nextBtn = swiperContainer.querySelector('.swiper-button-next');
+    const prevBtn = swiperContainer.querySelector('.swiper-button-prev');
+
+    const swiper = new Swiper(swiperContainer, {
       spaceBetween: {{ space_between }},
       slidesPerView: {{ slides_per_view_desktop }},
       pagination: {
-        el: '.swiper-pagination',
+        el: paginationEl,
         clickable: true,
         enabled: {{ show_pagination | json }}
       },
       navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
+        nextEl: nextBtn,
+        prevEl: prevBtn,
         enabled: {{ show_navigation | json }}
       },
       breakpoints: {
@@ -87,27 +96,37 @@
       swiper.slideTo(0);
     }
 
-    const addListeners = () => {
-      const colorInputs = document.querySelectorAll('input[name="Color-1"]');
-    
-      colorInputs.forEach(input => {
+    function watchColorInputs() {
+      const inputs = container.querySelectorAll('input[name="Color-1"]');
+      inputs.forEach(input => {
         input.addEventListener('change', () => {
           if (input.checked) {
-            const selectedColor = input.value.toLowerCase();
-            renderSlides(selectedColor);
+            renderSlides(input.value.toLowerCase());
           }
         });
       });
+
+      const defaultInput = container.querySelector('input[name="Color-1"]:checked');
+      if (defaultInput) {
+        renderSlides(defaultInput.value.toLowerCase());
+      }
     }
-    addListeners();
 
-    const container = document.querySelector('.product__info-container');
+    watchColorInputs();
 
-    const observer = new MutationObserver(mutations => addListeners());
-    observer.observe(container, { childList: true, subtree: true });
-
-    const defaultInput = document.querySelector('input[name="Color-1"]:checked');
-    if (defaultInput) {
-      renderSlides(defaultInput.value.toLowerCase());
+    const infoContainer = container.querySelector('.product__info-container');
+    if (infoContainer) {
+      const observer = new MutationObserver(watchColorInputs);
+      observer.observe(infoContainer, { childList: true, subtree: true });
     }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document;
+    initSwiperAndSlides(section);
+  });
+
+  document.addEventListener('shopify:section:load', (e) => {
+    initSwiperAndSlides(e.target);
+  });
 </script>
