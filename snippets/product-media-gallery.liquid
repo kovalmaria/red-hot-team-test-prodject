@@ -39,7 +39,6 @@
   {% endfor %}
 </script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
     const swiper = new Swiper('.product-swiper', {
       spaceBetween: {{ space_between }},
       slidesPerView: {{ slides_per_view_desktop }},
@@ -111,5 +110,4 @@
     if (defaultInput) {
       renderSlides(defaultInput.value.toLowerCase());
     }
-  });
 </script>
