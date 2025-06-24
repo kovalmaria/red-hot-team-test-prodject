@@ -216,7 +216,7 @@
                   {{- product.selected_or_first_available_variant.sku -}}
                 </p>
               {%- when 'dynamic_accordion' -%}
-                {% render accordion %}
+                {% render 'accordion', product: product %}
               {% comment %} {%- when 'custom_liquid' -%}
                 {{ block.settings.custom_liquid }}
               {%- when 'collapsible_tab' -%}
