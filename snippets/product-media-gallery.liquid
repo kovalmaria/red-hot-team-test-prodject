@@ -7,9 +7,14 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
 
-<div class="swiper product-swiper">
-  <div class="swiper-wrapper">
-  </div>
+<div
+  class="swiper product-swiper"
+  data-slides-desktop="{{ slides_per_view_desktop }}"
+  data-slides-tablet="{{ slides_per_view_tablet }}"
+  data-slides-mobile="{{ slides_per_view_mobile }}"
+  data-space-between="{{ space_between }}"
+>
+  <div class="swiper-wrapper"></div>
 
   {% if show_navigation %}
     <div class="swiper-button-prev"></div>
@@ -44,13 +49,18 @@
     const swiperWrapper = swiperContainer.querySelector('.swiper-wrapper');
     if (!swiperWrapper) return;
 
+    const slidesPerViewDesktop = parseInt(swiperContainer.dataset.slidesDesktop);
+    const slidesPerViewTablet = parseInt(swiperContainer.dataset.slidesTablet);
+    const slidesPerViewMobile = parseInt(swiperContainer.dataset.slidesMobile);
+    const spaceBetween = parseInt(swiperContainer.dataset.spaceBetween);
+
     const paginationEl = swiperContainer.querySelector('.swiper-pagination');
     const nextBtn = swiperContainer.querySelector('.swiper-button-next');
     const prevBtn = swiperContainer.querySelector('.swiper-button-prev');
 
     const swiper = new Swiper(swiperContainer, {
-      spaceBetween: {{ space_between }},
-      slidesPerView: {{ slides_per_view_desktop }},
+      spaceBetween,
+      slidesPerView: slidesPerViewDesktop,
       pagination: {
         el: paginationEl,
         clickable: true,
@@ -63,16 +73,16 @@
       },
       breakpoints: {
         320: {
-          slidesPerView: {{ slides_per_view_mobile }},
-          spaceBetween: {{ space_between }}
+          slidesPerView: slidesPerViewMobile,
+          spaceBetween
         },
         768: {
-          slidesPerView: {{ slides_per_view_tablet }},
-          spaceBetween: {{ space_between }}
+          slidesPerView: slidesPerViewTablet,
+          spaceBetween
         },
         1024: {
-          slidesPerView: {{ slides_per_view_desktop }},
-          spaceBetween: {{ space_between }}
+          slidesPerView: slidesPerViewDesktop,
+          spaceBetween
         }
       }
     });
