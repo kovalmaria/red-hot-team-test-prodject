@@ -216,7 +216,7 @@
                   {{- product.selected_or_first_available_variant.sku -}}
                 </p>
               {%- when 'dynamic_accordion' -%}
-                {% render accordion.liquid %}
+                {% render accordion %}
               {% comment %} {%- when 'custom_liquid' -%}
                 {{ block.settings.custom_liquid }}
               {%- when 'collapsible_tab' -%}
@@ -740,6 +740,11 @@
   "tag": "section",
   "class": "section",
   "blocks": [
+    {
+      "type": "dynamic_accordion",
+      "name": "Dynamic Accordion",
+      "settings": []
+    },
     {
       "type": "@app"
     },
