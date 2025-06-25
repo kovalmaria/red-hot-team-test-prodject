@@ -95,8 +95,6 @@
 
           {%- for block in section.blocks -%}
             {%- case block.type -%}
-            {%- when 'dynamic_accordion' -%}
-              {% render 'accordion', product: product %}
               {%- when '@app' -%}
                 {% render block %}
               {%- when 'text' -%}
@@ -217,6 +215,8 @@
                   <span class="visually-hidden">{{ 'products.product.sku' | t }}:</span>
                   {{- product.selected_or_first_available_variant.sku -}}
                 </p>
+              {%- when 'dynamic_accordion' -%}
+                {% render 'accordion', product: product %}
               {% comment %} {%- when 'custom_liquid' -%}
                 {{ block.settings.custom_liquid }}
               {%- when 'collapsible_tab' -%}
@@ -742,7 +742,16 @@
   "blocks": [
     {
       "type": "dynamic_accordion",
-      "name": "Dynamic Accordion"
+      "name": "t:sections.main-product.blocks.dynamic_accordion.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "admin_label",
+          "label": "Admin label (for your reference)",
+          "default": "Dynamic Accordion from metafields"
+        }
+      ]
     },
     {
       "type": "@app"
