@@ -54,6 +54,10 @@
           "settings": {
             "share_label": "Share"
           }
+        },
+        "dynamic_accordion_t3jawV": {
+          "type": "dynamic_accordion",
+          "settings": {}
         }
       },
       "block_order": [
@@ -64,7 +68,8 @@
         "quantity_selector",
         "buy_buttons",
         "description",
-        "share"
+        "share",
+        "dynamic_accordion_t3jawV"
       ],
       "settings": {
         "enable_sticky_info": true,
@@ -79,7 +84,13 @@
         "hide_variants": true,
         "enable_video_looping": false,
         "padding_top": 36,
-        "padding_bottom": 12
+        "padding_bottom": 12,
+        "slides_per_view_mobile": 1,
+        "slides_per_view_tablet": 2,
+        "slides_per_view_desktop": 3,
+        "space_between": 16,
+        "show_pagination": true,
+        "show_navigation": true
       }
     },
     "related-products": {
